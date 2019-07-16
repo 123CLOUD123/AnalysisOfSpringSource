@@ -1,4 +1,4 @@
-package com.dandan.util;
+package com.analysis.util;
 
 /**
  * 资源判断类

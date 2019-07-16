@@ -1,11 +1,11 @@
-package com.dandan.context;
+package com.analysis.context;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.dandan.bean.BeanDefinition;
-import com.dandan.bean.BeanReader;
-import com.dandan.support.Registry;
+import com.analysis.bean.BeanDefinition;
+import com.analysis.bean.BeanReader;
+import com.analysis.support.Registry;
 
 /**
  * 应用程序上下文

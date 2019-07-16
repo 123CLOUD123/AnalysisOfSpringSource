@@ -1,4 +1,4 @@
-package com.dandan.util;
+package com.analysis.util;
 
 /**
  * bean名称生成类

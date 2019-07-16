@@ -1,6 +1,6 @@
-package com.dandan.support;
+package com.analysis.support;
 
-import com.dandan.bean.BeanDefinition;
+import com.analysis.bean.BeanDefinition;
 
 /**
  * 注册bean

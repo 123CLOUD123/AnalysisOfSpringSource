@@ -1,6 +1,6 @@
-package com.dandan.bean;
+package com.analysis.bean;
 
-import com.dandan.metadata.AnnotationMetadata;
+import com.analysis.metadata.AnnotationMetadata;
 
 /**
  * 

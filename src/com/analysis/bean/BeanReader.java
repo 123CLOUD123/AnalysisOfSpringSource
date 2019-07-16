@@ -1,7 +1,7 @@
-package com.dandan.bean;
+package com.analysis.bean;
 
-import com.dandan.support.Registry;
-import com.dandan.util.BeanNameGenerator;
+import com.analysis.support.Registry;
+import com.analysis.util.BeanNameGenerator;
 
 public class BeanReader {
 

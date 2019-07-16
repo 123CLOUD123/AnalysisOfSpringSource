@@ -1,4 +1,4 @@
-package com.dandan.metadata;
+package com.analysis.metadata;
 
 import java.lang.annotation.Annotation;
 

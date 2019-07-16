@@ -1,4 +1,4 @@
-package com.dandan.test;
+package com.analysis.test;
 
 @SuppressWarnings("abc")
 public class TestConfig {
