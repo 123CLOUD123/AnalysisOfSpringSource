@@ -5,6 +5,6 @@ import com.analysis.context.BeanFactory;
 @FunctionalInterface
 public interface BeanFactoryPostProcessor {
 
-	void run(BeanFactory factory);
+	void process(BeanFactory factory);
 	
 }
