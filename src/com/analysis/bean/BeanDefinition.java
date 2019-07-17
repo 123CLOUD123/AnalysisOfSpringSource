@@ -13,7 +13,7 @@ public class BeanDefinition {
 	
 	private volatile Object beanClass;
 	
-	BeanDefinition(Class<?> clazz) {
+	public BeanDefinition(Class<?> clazz) {
 		this.beanClass = clazz;
 		this.am = new AnnotationMetadata(clazz);
 	}
