@@ -10,7 +10,6 @@ import com.analysis.bean.BeanDefinition;
 /**
  * bean工厂类
  * @author Cloud
- *
  */
 public class BeanFactory {
 
@@ -21,6 +20,14 @@ public class BeanFactory {
 	public void registerBeanDefinition(String name, BeanDefinition bd) {
 		this.beanMap.put(name, bd);
 		this.beanNames.add(name);
+	}
+	
+	public List<String> getBeanNames() {
+		return this.beanNames;
+	}
+	
+	public BeanDefinition getBeanDefinition(String name) {
+		return this.beanMap.get(name);
 	}
 	
 }

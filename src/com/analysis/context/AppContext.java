@@ -34,7 +34,7 @@ public class AppContext implements Registry {
 	/*
 	 * 启动时间
 	 */
-	private LocalDateTime datetime;
+	private LocalDateTime startUpDate;
 	
 	/*
 	 * 工厂后置处理器
@@ -60,7 +60,8 @@ public class AppContext implements Registry {
 		prepareRefresh();
 		
 		// 调用工厂后置处理器
-		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory);
+		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory, getFactoryPostProcessors());
+		
 		
 		
 	}
@@ -73,9 +74,14 @@ public class AppContext implements Registry {
 	}
 	
 	private void prepareRefresh() {
-		this.datetime = LocalDateTime.now();
+		this.startUpDate = LocalDateTime.now();
 		log.info("系统正在启动...");
 	}
+	
+	public List<BeanFactoryPostProcessor> getFactoryPostProcessors() {
+		return this.factoryPostProcessors;
+	}
+	
 	
 	
 }
