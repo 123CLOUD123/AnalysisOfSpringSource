@@ -18,4 +18,8 @@ public class AnnotationMetadata {
 		this.clazz = clazz;
 	}
 	
+	public Annotation[] getAnnotations() {
+		return this.annotations;
+	}
+	
 }
