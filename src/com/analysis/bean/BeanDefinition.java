@@ -17,4 +17,12 @@ public class BeanDefinition {
 		this.beanClass = clazz;
 		this.am = new AnnotationMetadata(clazz);
 	}
+	
+	public AnnotationMetadata getAnnotationMetadata() {
+		return this.am;
+	}
+	
+	public Object getBeanClass() {
+		return this.beanClass;
+	}
 }
