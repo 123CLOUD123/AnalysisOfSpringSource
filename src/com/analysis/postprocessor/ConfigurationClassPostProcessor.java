@@ -23,7 +23,8 @@ public class ConfigurationClassPostProcessor implements BeanFactoryPostProcessor
 			AnnotationMetadata am = bd.getAnnotationMetadata();
 			Annotation[] as = am.getAnnotations();
 			for (Annotation a : as) {
-				if (a.getClass().getSimpleName().equals("Config")) {
+				String aa = a.annotationType().getSimpleName();
+				if (a.annotationType().getSimpleName().equals("Config")) {
 					BeanDefinitionHolder bdh = new BeanDefinitionHolder(beanName, bd);
 					configBeans.add(bdh);
 				}
