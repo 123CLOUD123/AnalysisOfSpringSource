@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import com.analysis.bean.BeanDefinition;
 import com.analysis.bean.BeanReader;
+import com.analysis.processorinterface.AfterInstantiatedPostProcessor;
 import com.analysis.processorinterface.BeanFactoryPostProcessor;
 import com.analysis.processorinterface.impl.PostProcessorRegistrationDelegate;
 import com.analysis.support.Registry;
@@ -55,7 +56,7 @@ public class AppContext implements Registry {
 		prepareRefresh();
 		
 		// 调用BeanFactory后置处理器
-		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory, getFactoryPostProcessors());
+		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory);
 		
 		// 注册Bean后置处理器
 		PostProcessorRegistrationDelegate.registerBeanPostProcessors(factory);
@@ -71,6 +72,13 @@ public class AppContext implements Registry {
 		Map<String, BeanDefinition> beanMaps = factory.getBeanMap();
 		for (Entry<String, BeanDefinition> entry : beanMaps.entrySet()) {
 			getBean(entry.getKey());
+		}
+		
+		// 调用AfterInstantiatedPostProcessor
+		for (Object obj : factory.getFactoryInstances()) {
+			if (obj instanceof AfterInstantiatedPostProcessor) {
+				((AfterInstantiatedPostProcessor) obj).afterSingletonsInstantiated();
+			}
 		}
 	}
 	

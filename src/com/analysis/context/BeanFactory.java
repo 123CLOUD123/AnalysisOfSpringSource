@@ -30,6 +30,12 @@ public class BeanFactory {
 	/* Bean后置处理器实例 */
 	private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 	
+	/*
+	 * 获取所有实例
+	 */
+	public List<Object> getFactoryInstances() {
+		return new ArrayList<>(objects.values());
+	}
 	
 	/*
 	 * 获取Bean后置处理器
@@ -79,7 +85,8 @@ public class BeanFactory {
 	public List<String> getBeanForType(Class<?> clazz) {
 		List<String> beanNames = new ArrayList<>();
 		for (Entry<String, BeanDefinition> entry : beanMap.entrySet()) {
-			if (entry.getValue().getBeanClass() == clazz) {
+			Class<?> a = entry.getValue().getBeanClass();
+			if (clazz.isAssignableFrom(a)) {
 				beanNames.add(entry.getKey());
 			}
 		}
@@ -143,6 +150,7 @@ public class BeanFactory {
 		
 		obj = applyBeanPostProcessorsBeforeInitialization(name, obj);
 		invokeInitMethod(name, bd, obj);
+		this.objects.put(name, obj);
 		obj = applyBeanPostProcessorsAfterInitialization(name, obj);
 		
 		return obj;
