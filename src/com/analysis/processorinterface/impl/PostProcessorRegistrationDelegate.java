@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.analysis.context.BeanFactory;
 import com.analysis.processorinterface.BeanFactoryPostProcessor;
+import com.analysis.processorinterface.BeanPostProcessor;
 
 public class PostProcessorRegistrationDelegate {
 
@@ -20,6 +21,17 @@ public class PostProcessorRegistrationDelegate {
 		
 	}
 	
-//	public static void 
+	public static void registerBeanPostProcessors(BeanFactory beanFactory) {
+		
+		// 获取后置处理器名称
+		List<String> processorNames = beanFactory.getBeanForType(BeanPostProcessor.class);
+		
+		// 注册后置处理器
+		for (String name : processorNames) {
+			BeanPostProcessor bpp = (BeanPostProcessor) beanFactory.getBean(name);
+			beanFactory.addBeanPostProcessor(bpp);
+		}
+		
+	}
 	
 }
