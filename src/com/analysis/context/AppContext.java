@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 
 import com.analysis.bean.BeanDefinition;
 import com.analysis.bean.BeanReader;
-import com.analysis.postprocessor.BeanFactoryPostProcessor;
-import com.analysis.postprocessor.PostProcessorRegistrationDelegate;
+import com.analysis.processorinterface.BeanFactoryPostProcessor;
+import com.analysis.processorinterface.impl.PostProcessorRegistrationDelegate;
 import com.analysis.support.Registry;
 
 /**
@@ -49,21 +49,25 @@ public class AppContext implements Registry {
 	}
 
 
-	@Override
-	public void registerBeanDefinition(String name, BeanDefinition bd) {
-		this.factory.registerBeanDefinition(name, bd);
-		
-	}
+	
 	
 	public void refresh() {
 		
 		prepareRefresh();
 		
-		// 调用工厂后置处理器
+		// 调用BeanFactory后置处理器
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory, getFactoryPostProcessors());
 		
+		// 注册Bean后置处理器
+//		PostProcessorRegistrationDelegate.r
 		
 		
+		
+	}
+	
+	@Override
+	public void registerBeanDefinition(String name, BeanDefinition bd) {
+		this.factory.registerBeanDefinition(name, bd);
 	}
 
 
@@ -80,6 +84,20 @@ public class AppContext implements Registry {
 	
 	public List<BeanFactoryPostProcessor> getFactoryPostProcessors() {
 		return this.factoryPostProcessors;
+	}
+	
+	/*
+	 * 获取bean工厂
+	 */
+	public BeanFactory getFactory() {
+		return this.factory;
+	}
+	
+	/*
+	 * 根据名称获取bean实例
+	 */
+	public Object getBean(String name) {
+		return factory.getBean(name);
 	}
 	
 	
