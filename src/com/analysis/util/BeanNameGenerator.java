@@ -15,6 +15,8 @@ public class BeanNameGenerator {
 	public static String getName(Class<?> clazz) {
 		String result = clazz.getName();
 		result = result.substring(result.lastIndexOf(".") + 1);
+		int firstChar = result.charAt(0);
+		result = result.replaceFirst(new Character((char) firstChar).toString(), new Character((char) (firstChar + 32)).toString());
 		return result;
 	}
 	
