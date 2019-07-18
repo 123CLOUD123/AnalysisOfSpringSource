@@ -22,7 +22,7 @@ public class BeanDefinition {
 		return this.am;
 	}
 	
-	public Object getBeanClass() {
-		return this.beanClass;
+	public Class<?> getBeanClass() {
+		return (Class<?>) this.beanClass;
 	}
 }
