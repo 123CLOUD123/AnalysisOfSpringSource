@@ -10,8 +10,9 @@ import com.analysis.context.BeanFactory;
 import com.analysis.metadata.AnnotationMetadata;
 import com.analysis.processorinterface.BeanFactoryPostProcessor;
 import com.analysis.support.ConfigurationClassParser;
+import com.analysis.support.PriorityOrdered;
 
-public class ConfigurationClassPostProcessor implements BeanFactoryPostProcessor {
+public class ConfigurationClassPostProcessor implements BeanFactoryPostProcessor, PriorityOrdered {
 
 	@Override
 	public void process(BeanFactory factory) {
