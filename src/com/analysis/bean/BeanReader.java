@@ -1,5 +1,6 @@
 package com.analysis.bean;
 
+import com.analysis.processorinterface.impl.BeanCreateInfoPostProcess;
 import com.analysis.processorinterface.impl.ConfigurationClassPostProcessor;
 import com.analysis.support.ConfigurationClassParser;
 import com.analysis.support.Registry;
@@ -19,6 +20,7 @@ public class BeanReader {
 	 */
 	public void registerInternalPostProcessor() {
 		registerBean(ConfigurationClassPostProcessor.class);
+		registerBean(BeanCreateInfoPostProcess.class);
 	}
 	
 	/*
