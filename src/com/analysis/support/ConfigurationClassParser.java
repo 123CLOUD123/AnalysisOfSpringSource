@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.analysis.annotation.Config;
+import com.analysis.annotation.Part;
 import com.analysis.bean.BeanDefinition;
 import com.analysis.bean.BeanDefinitionHolder;
 import com.analysis.context.BeanFactory;
@@ -50,7 +51,7 @@ public class ConfigurationClassParser {
 		
 		// 根据包解析文件
 		List<String> javaFiles = new ArrayList<>();
-		String base = "./src/";
+		String base = "src/";
 		for (String pack : scanPackages) {
 			String processedPack = base + pack;
 			File f = new File(processedPack);
@@ -58,7 +59,21 @@ public class ConfigurationClassParser {
 				if (!filename.contains(".") && !filename.substring(filename.lastIndexOf(".")).equals(".java")) {
 					return false;
 				} else {
-					return true;
+					String shortName = filename.substring(0, filename.indexOf("."));
+					String filepath = processedPack.replace("/", ".");
+					String fullName = (pack + "." + shortName).replace("/", ".");
+					try {
+						Class<?> clazz = Class.forName(fullName);
+						Annotation anno = clazz.getAnnotation(Part.class);
+						if (anno == null) {
+							return false;
+						} else {
+							return true;
+						}
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+					return false;
 				}
 			});
 			for (String s : ss) {
