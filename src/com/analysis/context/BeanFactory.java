@@ -38,6 +38,17 @@ public class BeanFactory {
 		return this.beanPostProcessors;
 	}
 	
+	public void addBeanPostProcessor(BeanPostProcessor bpp) {
+		this.beanPostProcessors.add(bpp);
+	}
+	
+	/*
+	 * 获取已注册的bean
+	 */
+	public Map<String, BeanDefinition> getBeanMap() {
+		return beanMap;
+	}
+	
 	
 	
 	/*
@@ -119,6 +130,7 @@ public class BeanFactory {
 		// 初始化bean
 		obj = initializeBean(name, bd, obj);
 		
+		return obj;
 		
 	}
 	

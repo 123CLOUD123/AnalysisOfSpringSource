@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -48,8 +49,6 @@ public class AppContext implements Registry {
 		this.refresh();
 	}
 
-
-	
 	
 	public void refresh() {
 		
@@ -59,10 +58,20 @@ public class AppContext implements Registry {
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(factory, getFactoryPostProcessors());
 		
 		// 注册Bean后置处理器
-//		PostProcessorRegistrationDelegate.r
+		PostProcessorRegistrationDelegate.registerBeanPostProcessors(factory);
 		
+		// 完成bean实例化
+		finishBeanFactoryInitialization(factory);
 		
+	}
+	
+	public void finishBeanFactoryInitialization(BeanFactory factory) {
 		
+		// 实例化
+		Map<String, BeanDefinition> beanMaps = factory.getBeanMap();
+		for (Entry<String, BeanDefinition> entry : beanMaps.entrySet()) {
+			getBean(entry.getKey());
+		}
 	}
 	
 	@Override
