@@ -64,6 +64,13 @@ public class AppContext implements Registry {
 		// 完成bean实例化
 		finishBeanFactoryInitialization(factory);
 		
+		// 完成启动
+		finishStart(factory);
+		
+	}
+	
+	public void finishStart(BeanFactory factory) {
+		log.info("----------------");
 	}
 	
 	public void finishBeanFactoryInitialization(BeanFactory factory) {
