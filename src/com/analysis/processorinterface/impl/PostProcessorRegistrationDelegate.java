@@ -49,10 +49,6 @@ public class PostProcessorRegistrationDelegate {
 			bpp.process(factory);
 		}
 
-		// 调用内部BeanFactoryPostProcessor
-//		ConfigurationClassPostProcessor configClass = new ConfigurationClassPostProcessor();
-//		configClass.process(factory);
-
 	}
 
 	public static void registerBeanPostProcessors(BeanFactory beanFactory) {
