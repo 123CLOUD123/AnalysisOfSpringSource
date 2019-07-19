@@ -94,12 +94,6 @@ public class AppContext implements Registry {
 		this.factory.registerBeanDefinition(name, bd);
 	}
 
-
-	@Override
-	public void register(Class<?>... classes) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private void prepareRefresh() {
 		this.startUpDate = LocalDateTime.now();
