@@ -9,7 +9,6 @@ import com.analysis.bean.BeanDefinition;
  */
 public interface Registry {
 
-	void register(Class<?>... classes);
 
 	void registerBeanDefinition(String name, BeanDefinition bd);
 	

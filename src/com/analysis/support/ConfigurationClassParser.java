@@ -60,7 +60,6 @@ public class ConfigurationClassParser {
 					return false;
 				} else {
 					String shortName = filename.substring(0, filename.indexOf("."));
-					String filepath = processedPack.replace("/", ".");
 					String fullName = (pack + "." + shortName).replace("/", ".");
 					try {
 						Class<?> clazz = Class.forName(fullName);
