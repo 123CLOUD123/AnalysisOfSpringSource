@@ -7,10 +7,13 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.analysis.bean.BeanDefinition;
+import com.analysis.exception.BeanException;
 import com.analysis.processorinterface.BeanFactoryPostProcessor;
 import com.analysis.processorinterface.BeanPostProcessor;
 import com.analysis.processorinterface.InitializingBean;
+import com.analysis.processorinterface.InstantiationAwareBeanPostProcessor;
 import com.analysis.processorinterface.MergedBeanDefinitionPostProcessor;
+import com.analysis.support.BeanFactoryAware;
 
 /**
  * bean工厂类
@@ -100,6 +103,7 @@ public class BeanFactory {
 		Object obj = objects.get(name);
 		if (obj == null) {
 			obj = createBean(name);
+			this.objects.put(name, obj);
 		}
 		return obj;
 	}
@@ -112,10 +116,28 @@ public class BeanFactory {
 		//先检查该bean名称是否已注册,若未注册，说明程序有问题，需解决
 		BeanDefinition bd = beanMap.get(name);
 		if (bd == null) {
-			throw new RuntimeException("bean:" + name + "未注册。");
+			throw new BeanException("bean名称:" + name + "未注册。");
 		}
 		
 		return doCreateBean(name, bd);
+	}
+	
+	/*
+	 * 根据类型查询已注册的bean
+	 */
+	public String resolveBeanNameByType(Class<?> clazz) {
+		
+		String name = null;
+		for (Entry<String, BeanDefinition> entry : beanMap.entrySet()) {
+			BeanDefinition bd = entry.getValue();
+			Class<?> internalClass = bd.getBeanClass();
+			if (internalClass == clazz) {
+				name = entry.getKey();
+				break;
+			}
+		}
+		
+		return name;
 	}
 	
 	public Object doCreateBean(String name, BeanDefinition bd) {
@@ -124,11 +146,13 @@ public class BeanFactory {
 		try {
 			obj = clazz.newInstance();
 		} catch (Exception e) {
-			throw new RuntimeException("bean初始化失败");
+			throw new BeanException("bean初始化失败");
 		}
 		
+		// 调用BeanFactoryAware
+		applyBeanFactoryAware();
+		
 		// 调用MergerBeanDefinitionPostProcessor
-		// 此时可进行依赖的解析
 		applyMergedBeanDefinitionPostProcessor(bd, name);
 		
 		// 对bean进行依赖注入
@@ -141,8 +165,20 @@ public class BeanFactory {
 		
 	}
 	
+	public void applyBeanFactoryAware() {
+		for (BeanPostProcessor bpp : getBeanPostProcessors()) {
+			if (bpp instanceof BeanFactoryAware) {
+				((BeanFactoryAware) bpp).setFactory(this);
+			}
+		}
+	}
+	
 	public void populate(String name, BeanDefinition bd, Object obj) {
-		
+		for (BeanPostProcessor bpp : getBeanPostProcessors()) {
+			if (bpp instanceof InstantiationAwareBeanPostProcessor) {
+				((InstantiationAwareBeanPostProcessor) bpp).postProcessPropertyValues(obj, name, bd);
+			}
+		}
 	}
 	
 	
@@ -150,7 +186,6 @@ public class BeanFactory {
 		
 		obj = applyBeanPostProcessorsBeforeInitialization(name, obj);
 		invokeInitMethod(name, bd, obj);
-		this.objects.put(name, obj);
 		obj = applyBeanPostProcessorsAfterInitialization(name, obj);
 		
 		return obj;

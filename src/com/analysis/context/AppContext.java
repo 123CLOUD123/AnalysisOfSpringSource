@@ -70,7 +70,6 @@ public class AppContext implements Registry {
 	}
 	
 	public void finishStart(BeanFactory factory) {
-		log.info("----------------");
 	}
 	
 	public void finishBeanFactoryInitialization(BeanFactory factory) {

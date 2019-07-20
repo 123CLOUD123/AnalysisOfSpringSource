@@ -1,6 +1,7 @@
 package com.analysis.metadata;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * 属性依赖元数据
@@ -9,16 +10,16 @@ import java.lang.reflect.Field;
  */
 public class InjectMetadata {
 
-	private final Field[] fields;
+	private final List<Field> fields;
 	
 	private final Class<?> clazz;
 	
-	public InjectMetadata(Field[] fields, Class<?> clazz) {
+	public InjectMetadata(List<Field> fields, Class<?> clazz) {
 		this.fields = fields;
 		this.clazz = clazz;
 	}
 	
-	public Field[] getFields() {
+	public List<Field> getFields() {
 		return fields;
 	}
 	

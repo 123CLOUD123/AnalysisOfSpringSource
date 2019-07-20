@@ -1,5 +1,8 @@
 package com.analysis.test;
 
-@SuppressWarnings("abc")
+import com.analysis.annotation.Config;
+
+@Config(packages = {"com/analysis/test/test1"})
 public class TestConfig {
+	
 }
