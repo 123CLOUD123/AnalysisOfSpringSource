@@ -1,6 +1,7 @@
 package com.analysis.bean;
 
 import com.analysis.metadata.AnnotationMetadata;
+import com.analysis.metadata.InjectMetadata;
 
 /**
  * 
@@ -10,6 +11,8 @@ import com.analysis.metadata.AnnotationMetadata;
 public class BeanDefinition {
 
 	private final AnnotationMetadata am;
+	
+	private InjectMetadata im;
 	
 	private volatile Object beanClass;
 	
@@ -24,5 +27,13 @@ public class BeanDefinition {
 	
 	public Class<?> getBeanClass() {
 		return (Class<?>) this.beanClass;
+	}
+	
+	public InjectMetadata getInjectMetadata() {
+		return im;
+	}
+	
+	public void setInjectMetadata(InjectMetadata im) {
+		this.im = im;
 	}
 }
